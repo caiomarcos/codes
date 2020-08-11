@@ -25,11 +25,11 @@ from keras.optimizers import Adam
 
 # %% Defining some constants to be used throughout
 # number os data points per set
-data_points = 66600
+data_points = 480000
 # image width
-img_w = 22
+img_w = 28
 # image length
-img_h = 22
+img_h = 28
 # matrix used to hold final images
 A = np.zeros((0, img_w, img_h))
 # image length when unidimensional
@@ -38,17 +38,19 @@ img_length = img_w*img_h
 N = img_length*2
 # overlap when making samples
 div = 1
-step = N//div
+step = 2048//div
 # # images in each class
 samples_per_class = ((data_points)//(N-(N-step)))-(div-1)
 # bitmap style
 style = "viridis_r"
+# path to files
+path = 'C:/Users/caiom/Documents/propecaut2019/disciplinas/topicos-wavelet/CWRU-DE/'
 
 
 # %% normal baseline at 48ksps
 # 0hp (5 seconds only)
 # import matlab file using scipy
-normal_48_0hp = scipy.io.loadmat('./48ksps/0hp/97.mat')
+normal_48_0hp = scipy.io.loadmat(path+'48ksps/0hp/97.mat')
 # get only the acc data points
 normal_48_0hp = normal_48_0hp['X097_DE_time']
 # undersample by 4 to get 12ksps (resampled)
@@ -58,7 +60,7 @@ normal_48_0hp_rs = scipy.signal.resample(normal_48_0hp, data_points)
 
 # 1hp
 # import matlab file using scipy
-normal_48_1hp = scipy.io.loadmat('./48ksps/1hp/98.mat')
+normal_48_1hp = scipy.io.loadmat(path+'/48ksps/1hp/98.mat')
 # get only the acc data points
 normal_48_1hp = normal_48_1hp['X098_DE_time']
 # undersample by 4 to get 12ksps (resampled)
@@ -68,7 +70,7 @@ normal_48_1hp_rs = scipy.signal.resample(normal_48_1hp, data_points)
 
 # 2hp
 # import matlab file using scipy
-normal_48_2hp = scipy.io.loadmat('./48ksps/2hp/99.mat')
+normal_48_2hp = scipy.io.loadmat(path+'/48ksps/2hp/99.mat')
 # get only the acc data points
 normal_48_2hp = normal_48_2hp['X099_DE_time']
 # undersample by 4 to get 12ksps (resampled)
@@ -78,7 +80,7 @@ normal_48_2hp_rs = scipy.signal.resample(normal_48_2hp, data_points)
 
 # 3hp
 # import matlab file using scipy
-normal_48_3hp = scipy.io.loadmat('./48ksps/3hp/100.mat')
+normal_48_3hp = scipy.io.loadmat(path+'/48ksps/3hp/100.mat')
 # get only the acc data points
 normal_48_3hp = normal_48_3hp['X100_DE_time']
 # undersample by 4 to get 12ksps (resampled)
@@ -89,7 +91,7 @@ normal_48_3hp_rs = scipy.signal.resample(normal_48_3hp, data_points)
 # %% rolling element (ball) at 48ksps
 # 0hp (5 seconds)
 # import matlab file using scipy
-ball_48_0hp = scipy.io.loadmat('./48ksps/0hp/226.mat')
+ball_48_0hp = scipy.io.loadmat(path+'/48ksps/0hp/226.mat')
 # get only the acc data points
 ball_48_0hp = ball_48_0hp['X226_DE_time']
 # undersample to 12ksps
@@ -99,7 +101,7 @@ ball_48_0hp_rs = scipy.signal.resample(ball_48_0hp, data_points)
 
 # 1hp
 # import matlab file using scipy
-ball_48_1hp = scipy.io.loadmat('./48ksps/1hp/227.mat')
+ball_48_1hp = scipy.io.loadmat(path+'/48ksps/1hp/227.mat')
 # get only the acc data points
 ball_48_1hp = ball_48_1hp['X227_DE_time']
 # undersample to 12ksps
@@ -109,7 +111,7 @@ ball_48_1hp_rs = scipy.signal.resample(ball_48_1hp, data_points)
 
 # 2hp
 # import matlab file using scipy
-ball_48_2hp = scipy.io.loadmat('./48ksps/2hp/228.mat')
+ball_48_2hp = scipy.io.loadmat(path+'/48ksps/2hp/228.mat')
 # get only the acc data points
 ball_48_2hp = ball_48_2hp['X228_DE_time']
 # undersample to 12ksps
@@ -119,7 +121,7 @@ ball_48_2hp_rs = scipy.signal.resample(ball_48_2hp, data_points)
 
 # 3hp
 # import matlab file using scipy
-ball_48_3hp = scipy.io.loadmat('./48ksps/3hp/229.mat')
+ball_48_3hp = scipy.io.loadmat(path+'/48ksps/3hp/229.mat')
 # get only the acc data points
 ball_48_3hp = ball_48_3hp['X229_DE_time']
 # undersample to 12ksps
@@ -130,7 +132,7 @@ ball_48_3hp_rs = scipy.signal.resample(ball_48_3hp, data_points)
 # %% inner race at 48ksps
 # 0hp (5 seconds)
 # import matlab file using scipy
-inner_race_48_0hp = scipy.io.loadmat('./48ksps/0hp/213.mat')
+inner_race_48_0hp = scipy.io.loadmat(path+'/48ksps/0hp/213.mat')
 # get only the acc data points
 inner_race_48_0hp = inner_race_48_0hp['X213_DE_time']
 # undersample to 12ksps
@@ -140,7 +142,7 @@ inner_race_48_0hp_rs = scipy.signal.resample(inner_race_48_0hp, data_points)
 
 # 1hp
 # import matlab file using scipy
-inner_race_48_1hp = scipy.io.loadmat('./48ksps/1hp/214.mat')
+inner_race_48_1hp = scipy.io.loadmat(path+'/48ksps/1hp/214.mat')
 # get only the acc data points
 inner_race_48_1hp = inner_race_48_1hp['X214_DE_time']
 # undersample to 12ksps
@@ -150,7 +152,7 @@ inner_race_48_1hp_rs = scipy.signal.resample(inner_race_48_1hp, data_points)
 
 # 2hp
 # import matlab file using scipy
-inner_race_48_2hp = scipy.io.loadmat('./48ksps/2hp/215.mat')
+inner_race_48_2hp = scipy.io.loadmat(path+'/48ksps/2hp/215.mat')
 # get only the acc data points
 inner_race_48_2hp = inner_race_48_2hp['X215_DE_time']
 # undersample to 12ksps
@@ -160,7 +162,7 @@ inner_race_48_2hp_rs = scipy.signal.resample(inner_race_48_2hp, data_points)
 
 # 3hp
 # import matlab file using scipy
-inner_race_48_3hp = scipy.io.loadmat('./48ksps/3hp/217.mat')
+inner_race_48_3hp = scipy.io.loadmat(path+'/48ksps/3hp/217.mat')
 # get only the acc data points
 inner_race_48_3hp = inner_race_48_3hp['X217_DE_time']
 # undersample to 12ksps
@@ -171,7 +173,7 @@ inner_race_48_3hp_rs = scipy.signal.resample(inner_race_48_3hp, data_points)
 # %% outer race at 3oclock at 48ksps
 # 0hp
 # import matlab file using scipy
-outer_race_at3_48_0hp = scipy.io.loadmat('./48ksps/0hp/250.mat')
+outer_race_at3_48_0hp = scipy.io.loadmat(path+'/48ksps/0hp/250.mat')
 # get only the acc data points
 outer_race_at3_48_0hp = outer_race_at3_48_0hp['X250_DE_time']
 # undersample to 12ksps
@@ -182,7 +184,7 @@ outer_race_at3_48_0hp_rs = scipy.signal.resample(outer_race_at3_48_0hp,
 
 # 1hp
 # import matlab file using scipy
-outer_race_at3_48_1hp = scipy.io.loadmat('./48ksps/1hp/251.mat')
+outer_race_at3_48_1hp = scipy.io.loadmat(path+'/48ksps/1hp/251.mat')
 # get only the acc data points
 outer_race_at3_48_1hp = outer_race_at3_48_1hp['X251_DE_time']
 # undersample to 12ksps
@@ -193,7 +195,7 @@ outer_race_at3_48_1hp_rs = scipy.signal.resample(outer_race_at3_48_1hp,
 
 # 2hp
 # import matlab file using scipy
-outer_race_at3_48_2hp = scipy.io.loadmat('./48ksps/2hp/252.mat')
+outer_race_at3_48_2hp = scipy.io.loadmat(path+'/48ksps/2hp/252.mat')
 # get only the acc data points
 outer_race_at3_48_2hp = outer_race_at3_48_2hp['X252_DE_time']
 # undersample to 12ksps
@@ -204,7 +206,7 @@ outer_race_at3_48_2hp_rs = scipy.signal.resample(outer_race_at3_48_2hp,
 
 # 3hp
 # import matlab file using scipy
-outer_race_at3_48_3hp = scipy.io.loadmat('./48ksps/3hp/253.mat')
+outer_race_at3_48_3hp = scipy.io.loadmat(path+'/48ksps/3hp/253.mat')
 # get only the acc data points
 outer_race_at3_48_3hp = outer_race_at3_48_3hp['X253_DE_time']
 # undersample to 12ksps
@@ -216,7 +218,7 @@ outer_race_at3_48_3hp_rs = scipy.signal.resample(outer_race_at3_48_3hp,
 # %% outer race at 6oclock at 48ksps
 # 0hp
 # import matlab file using scipy
-outer_race_at6_48_0hp = scipy.io.loadmat('./48ksps/0hp/238.mat')
+outer_race_at6_48_0hp = scipy.io.loadmat(path+'/48ksps/0hp/238.mat')
 # get only the acc data points
 outer_race_at6_48_0hp = outer_race_at6_48_0hp['X238_DE_time']
 # undersample to 12ksps
@@ -227,7 +229,7 @@ outer_race_at6_48_0hp_rs = scipy.signal.resample(outer_race_at6_48_0hp,
 
 # 1hp
 # import matlab file using scipy
-outer_race_at6_48_1hp = scipy.io.loadmat('./48ksps/1hp/239.mat')
+outer_race_at6_48_1hp = scipy.io.loadmat(path+'/48ksps/1hp/239.mat')
 # get only the acc data points
 outer_race_at6_48_1hp = outer_race_at6_48_1hp['X239_DE_time']
 # undersample to 12ksps
@@ -238,7 +240,7 @@ outer_race_at6_48_1hp_rs = scipy.signal.resample(outer_race_at6_48_1hp,
 
 # 2hp
 # import matlab file using scipy
-outer_race_at6_48_2hp = scipy.io.loadmat('./48ksps/2hp/240.mat')
+outer_race_at6_48_2hp = scipy.io.loadmat(path+'/48ksps/2hp/240.mat')
 # get only the acc data points
 outer_race_at6_48_2hp = outer_race_at6_48_2hp['X240_DE_time']
 # undersample to 12ksps
@@ -249,7 +251,7 @@ outer_race_at6_48_2hp_rs = scipy.signal.resample(outer_race_at6_48_2hp,
 
 # 3hp
 # import matlab file using scipy
-outer_race_at6_48_3hp = scipy.io.loadmat('./48ksps/3hp/241.mat')
+outer_race_at6_48_3hp = scipy.io.loadmat(path+'/48ksps/3hp/241.mat')
 # get only the acc data points
 outer_race_at6_48_3hp = outer_race_at6_48_3hp['X241_DE_time']
 # undersample to 12ksps
@@ -261,7 +263,7 @@ outer_race_at6_48_3hp_rs = scipy.signal.resample(outer_race_at6_48_3hp,
 # %% outer race at 12oclock at 48ksps
 # 0hp
 # import matlab file using scipy
-outer_race_at12_48_0hp = scipy.io.loadmat('./48ksps/0hp/262.mat')
+outer_race_at12_48_0hp = scipy.io.loadmat(path+'/48ksps/0hp/262.mat')
 # get only the acc data points
 outer_race_at12_48_0hp = outer_race_at12_48_0hp['X262_DE_time']
 # undersample to 12ksps
@@ -272,7 +274,7 @@ outer_race_at12_48_0hp_rs = scipy.signal.resample(outer_race_at12_48_0hp,
 
 # 1hp
 # import matlab file using scipy
-outer_race_at12_48_1hp = scipy.io.loadmat('./48ksps/1hp/263.mat')
+outer_race_at12_48_1hp = scipy.io.loadmat(path+'/48ksps/1hp/263.mat')
 # get only the acc data points
 outer_race_at12_48_1hp = outer_race_at12_48_1hp['X263_DE_time']
 # undersample to 12ksps
@@ -283,7 +285,7 @@ outer_race_at12_48_1hp_rs = scipy.signal.resample(outer_race_at12_48_1hp,
 
 # 2hp
 # import matlab file using scipy
-outer_race_at12_48_2hp = scipy.io.loadmat('./48ksps/2hp/264.mat')
+outer_race_at12_48_2hp = scipy.io.loadmat(path+'/48ksps/2hp/264.mat')
 # get only the acc data points
 outer_race_at12_48_2hp = outer_race_at12_48_2hp['X264_DE_time']
 # undersample to 12ksps
@@ -294,7 +296,7 @@ outer_race_at12_48_2hp_rs = scipy.signal.resample(outer_race_at12_48_2hp,
 
 # 3hp
 # import matlab file using scipy
-outer_race_at12_48_3hp = scipy.io.loadmat('./48ksps/3hp/265.mat')
+outer_race_at12_48_3hp = scipy.io.loadmat(path+'/48ksps/3hp/265.mat')
 # get only the acc data points
 outer_race_at12_48_3hp = outer_race_at12_48_3hp['X265_DE_time']
 # undersample to 12ksps
@@ -332,9 +334,9 @@ def generate_images(df, step):
     B = np.zeros((0, img_w, img_h))
 
     for slice in slices:
-        fftsl = np.abs(fft(slice)[:N // 2])
+        fftsl = np.abs(fft(slice)[:2048 // 2])
         T = []
-        for x in range(0, len(fftsl)):
+        for x in range(0, img_length):
             T.append(abs(np.log2(fftsl[x]/img_length)))
         T = np.asarray(T)
 
@@ -436,8 +438,8 @@ A = A.reshape(A.shape[0], img_w, img_h, 1)
 
 # %% Appy labels to samples
 # Label1 identifies only normal baseline and fault, two classes
-# label1 = np.zeros(samples_per_class*6)
-# label1[0:(samples_per_class*4)] = 1
+# label1 = np.zeros(samples_per_class*18)
+# label1[0:(samples_per_class*3)] = 1
 
 # label2 identifies normal baseline and each specific fault at 2hp, six classes
 label2 = np.zeros(samples_per_class*6)
@@ -493,98 +495,98 @@ X_train, X_test, y_train, y_test = train_test_split(A, label4, test_size=0.25)
 
 # %% Build first CNN
 
-# define as sequential
-model1 = models.Sequential()
-# add first convolutional layer
-model1.add(Conv2D(16, (3, 3), activation='relu',
-                  input_shape=(img_w, img_h, 1)))
-# add first max pooling layer
-model1.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
-# add second convolutional layer
-model1.add(Conv2D(32, (3, 3), activation='relu'))
-# add second max pooling layer
-model1.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
-# flatten before mlp
-model1.add(Flatten())
-# add fully connected wih 128 neurons and relu activation
-model1.add(Dense(128, activation='relu'))
-# output six classes with softmax activtion
-model1.add(Dense(6, activation='softmax'))
-
-# print CNN info
-model1.summary()
-# compile CNN and define its functions
-model1.compile(loss='categorical_crossentropy', optimizer=Adam(),
-               metrics=['accuracy'])
-
-# %% Train CNN model1
-model1.fit(X_train, y_train, batch_size=10, nb_epoch=100,
-           validation_data=(X_test, y_test))
-
-# %% Export model to .h5 file
-model1.save("./model1_28x28_float_6k.h5")
-print("Saved model 1 to disk")
-
-# %% Results
-# Make inference
-# Predict and normalize predictions into 0s and 1s
-predictions = model1.predict(X_test)
-predictions2 = (predictions > 0.5)
-# Find accuracy of inference
-accuracy = accuracy_score(y_test, predictions2)
-print(accuracy)
-# calculate confusion matrix and print it
-matrix = confusion_matrix(y_test.argmax(axis=1), predictions2.argmax(axis=1))
-print(matrix)
-
-# Use evaluate to test, just another way to do the same thing
-result = model1.evaluate(X_test, y_test)
-print(result)
-confusion_matrix(y_test.argmax(axis=1), predictions2.argmax(axis=1))
-###############################################################################
-
-# # %% Same as above for another, simpler CNN model
 # # define as sequential
-# model2 = models.Sequential()
+# model1 = models.Sequential()
 # # add first convolutional layer
-# model2.add(Conv2D(2, (2, 2), activation='relu',
+# model1.add(Conv2D(16, (3, 3), activation='relu',
 #                   input_shape=(img_w, img_h, 1)))
 # # add first max pooling layer
-# model2.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
-# # flatten befor MLP
-# model2.add(Flatten())
-# # add fully connected wih 8 neurons and relu activation
-# model2.add(Dense(8, activation='relu'))
+# model1.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+# # add second convolutional layer
+# model1.add(Conv2D(32, (3, 3), activation='relu'))
+# # add second max pooling layer
+# model1.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+# # flatten before mlp
+# model1.add(Flatten())
+# # add fully connected wih 128 neurons and relu activation
+# model1.add(Dense(128, activation='relu'))
 # # output six classes with softmax activtion
-# model2.add(Dense(6, activation='softmax'))
+# model1.add(Dense(6, activation='softmax'))
 
 # # print CNN info
-# model2.summary()
+# model1.summary()
 # # compile CNN and define its functions
-# model2.compile(loss='categorical_crossentropy', optimizer=Adam(),
+# model1.compile(loss='categorical_crossentropy', optimizer=Adam(),
 #                metrics=['accuracy'])
 
-# # %% Train CNN model2
-# model2.fit(X_train, y_train, batch_size=10, nb_epoch=100,
+# # %% Train CNN model1
+# model1.fit(X_train, y_train, batch_size=10, nb_epoch=30,
 #            validation_data=(X_test, y_test))
 
-# # %% Export model to .h5 file
-# model2.save("./model2.h5")
-# print("Saved model to disk")
+# %% Export model to .h5 file
+# model1.save("./model1_28x28_float_6k.h5")
+# print("Saved model 1 to disk")
 
 # # %% Results
 # # Make inference
 # # Predict and normalize predictions into 0s and 1s
-# predictions = model2.predict(X_test)
-# predictions = (predictions > 0.5)
+# predictions = model1.predict(X_test)
+# predictions2 = (predictions > 0.5)
 # # Find accuracy of inference
-# accuracy = accuracy_score(y_test, predictions)
+# accuracy = accuracy_score(y_test, predictions2)
 # print(accuracy)
 # # calculate confusion matrix and print it
-# matrix = confusion_matrix(y_test.argmax(axis=1), predictions.argmax(axis=1))
+# matrix = confusion_matrix(y_test.argmax(axis=1), predictions2.argmax(axis=1))
 # print(matrix)
 
 # # Use evaluate to test, just another way to do the same thing
-# result = model2.evaluate(X_test, y_test)
+# result = model1.evaluate(X_test, y_test)
 # print(result)
-# confusion_matrix(y_test.argmax(axis=1), predictions.argmax(axis=1))
+# confusion_matrix(y_test.argmax(axis=1), predictions2.argmax(axis=1))
+###############################################################################
+
+# %% Same as above for another, simpler CNN model
+# define as sequential
+model2 = models.Sequential()
+# add first convolutional layer
+model2.add(Conv2D(2, (2, 2), activation='relu',
+                  input_shape=(img_w, img_h, 1)))
+# add first max pooling layer
+model2.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+# flatten befor MLP
+model2.add(Flatten())
+# add fully connected wih 8 neurons and relu activation
+model2.add(Dense(8, activation='relu'))
+# output six classes with softmax activtion
+model2.add(Dense(6, activation='softmax'))
+
+# print CNN info
+model2.summary()
+# compile CNN and define its functions
+model2.compile(loss='categorical_crossentropy', optimizer=Adam(),
+                metrics=['accuracy'])
+
+# %% Train CNN model2
+model2.fit(X_train, y_train, batch_size=10, nb_epoch=30,
+            validation_data=(X_test, y_test))
+
+# %% Export model to .h5 file
+model2.save("./model2.h5")
+print("Saved model to disk")
+
+# %% Results
+# Make inference
+# Predict and normalize predictions into 0s and 1s
+predictions = model2.predict(X_test)
+predictions = (predictions > 0.5)
+# Find accuracy of inference
+accuracy = accuracy_score(y_test, predictions)
+print(accuracy)
+# calculate confusion matrix and print it
+matrix = confusion_matrix(y_test.argmax(axis=1), predictions.argmax(axis=1))
+print(matrix)
+
+# Use evaluate to test, just another way to do the same thing
+result = model2.evaluate(X_test, y_test)
+print(result)
+confusion_matrix(y_test.argmax(axis=1), predictions.argmax(axis=1))
