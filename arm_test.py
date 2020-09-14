@@ -20,7 +20,7 @@ from sklearn.metrics import (confusion_matrix, accuracy_score, precision_score,
 from keras.callbacks import EarlyStopping
 import scipy.io
 from skimage import util
-from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, AveragePooling2D
 from keras import models
 from keras.optimizers import Adam
 from statistics import mean
@@ -33,7 +33,7 @@ from time import sleep
 
 # %% Defining some constants to be used throughout
 # number os data points per set
-data_points = 66600
+data_points = 480000
 # image width
 img_w = 28
 # image length
@@ -791,7 +791,31 @@ print(matrix)
 
 # %%
 # xsdjfkd = X_test.reshape(X_test.shape[0], img_w, img_h)
+model = models.Sequential()
 
+model.add(Conv2D(filters=6, kernel_size=(5, 5), activation='relu', input_shape=(28,28,1)))
+model.add(AveragePooling2D())
+
+model.add(Conv2D(filters=16, kernel_size=(5, 5), activation='relu'))
+model.add(AveragePooling2D())
+
+model.add(Flatten())
+
+model.add(Dense(units=120, activation='relu'))
+
+model.add(Dense(units=84, activation='relu'))
+
+model.add(Dense(units=6, activation = 'softmax'))
+
+# print CNN info
+model.summary()
+# compile CNN and define its functions
+model.compile(loss='categorical_crossentropy', optimizer=Adam(),
+               metrics=['accuracy'])
+
+# %% Train CNN model1
+history = model.fit(X_train, y_train, batch_size=10, nb_epoch=100)
+                      # validation_data=(X_test, y_test))
 
 # %% Build first CNN
 
@@ -888,8 +912,8 @@ history = model2.fit(X_train, y_train, batch_size=10, nb_epoch=100)
 # print(result)
 # confusion_matrix(y_test.argmax(axis=1), predictions2.argmax(axis=1))
 
-model1.save("./model1_28x28_arm_6660.h5")
-model2.save("./model2_28x28_arm_6660.h5")
+model1.save("./model1_28x28_arm.h5")
+model2.save("./model2_28x28_arm.h5")
 
 # # %%
 # confusion_1_final = sum(confusion_matrices_1)
