@@ -610,7 +610,7 @@ Sl = np.insert(Sl, 0, slaices, axis=0)
 (Imgs, img6) = generate_images(slaices)
 A = np.insert(A, 0, Imgs, axis=0)
 plt.axis('off')
-# plt.title('RE Oposto, 2 hp')
+plt.title('RE Oposto, 2 hp')
 plt.imshow(img, cmap=style)
 plt.show()
 # 3hp
@@ -657,7 +657,7 @@ A = np.insert(A, 0, Imgs, axis=0)
 #          rotation='vertical')
 
 # %% Reshape A
-A = A.reshape(A.shape[0], img_w, img_h, 1)
+Areshaped = A.reshape(A.shape[0], img_w, img_h, 1)
 
 # %% Appy labels to samples
 # Label1 identifies only normal baseline and fault, two classes
@@ -722,7 +722,7 @@ f1s_2 = []
 es = EarlyStopping(monitor='val_accuracy', mode='max')
 
 # %% Separate classes, labels, train and test
-X_train, X_test, y_train, y_test = train_test_split(A, label3,
+X_train, X_test, y_train, y_test = train_test_split(Areshaped, label3,
                                                     test_size=0.3,
                                                     random_state=21)
 Sl_train, Sl_test, y_train2, y_test2 = train_test_split(Sl, label3,
